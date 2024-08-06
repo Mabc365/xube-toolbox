@@ -8,3 +8,4 @@ Remove-Item $env:LOCALAPPDATA\nvim\.git -Recurse -Force
 nvim
 
 #Installing Neovim theming
+git clone --branch xvim https://github.com/Mabc365/xube-toolbox.git $env:LOCALAPPDATA\nvim
