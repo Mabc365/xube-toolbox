@@ -4,19 +4,20 @@ function Show-Menu {
     )
     cls
     Write-Host $Title -ForegroundColor Cyan
-    Write-Host "1: Powershell Setup"
-    Write-Host "2: Run Script 2"
+    Write-Host "1: Run Script from URL 1"
+    Write-Host "2: Run Script from URL 2"
     Write-Host "3: Exit"
 }
 
-function Run-Script {
+function Run-Command {
     param (
-        [string]$ScriptPath
+        [string]$Url
     )
-    if (Test-Path $ScriptPath) {
-        . $ScriptPath
-    } else {
-        Write-Host "Script not found!" -ForegroundColor Red
+    try {
+        $command = Invoke-RestMethod -Uri $Url
+        Invoke-Expression $command
+    } catch {
+        Write-Host "Failed to fetch or execute command from $Url" -ForegroundColor Red
     }
 }
 
@@ -25,8 +26,8 @@ do {
     $choice = Read-Host "Enter your choice"
 
     switch ($choice) {
-        '1' { Run-Script "" }
-        '2' { Run-Script "C:\Path\To\Script2.ps1" }
+        '1' { Run-Command "https://example.com/script1.ps1" }
+        '2' { Run-Command "https://example.com/script2.ps1" }
         '3' { Write-Host "Exiting..." -ForegroundColor Green; exit }
         default { Write-Host "Invalid option, try again." -ForegroundColor Red }
     }

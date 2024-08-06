@@ -2,21 +2,29 @@
 $jsonUrl = "https://raw.githubusercontent.com/Mabc365/xube-toolbox/main/setup-scripts/app-list.json"
 $tempFile = "$env:TEMP\app-list.json"
 
-# Download the JSON file from the URL
-Invoke-WebRequest -Uri $jsonUrl -OutFile $tempFile
-
-# Import applications using winget
-winget import -i $tempFile
-
-# Check if the import command was successful
-if ($LASTEXITCODE -eq 0) {
-    Write-Output "Applications imported successfully."
-} else {
-    Write-Output "Failed to import applications. Exit code: $LASTEXITCODE"
+# Download the JSON file from the URL with error handling
+try {
+    Invoke-WebRequest -Uri $jsonUrl -OutFile $tempFile -ErrorAction Stop
+    $downloadSuccess = $true
+} catch {
+    Write-Output "Failed to download JSON file. Error: $_"
+    $downloadSuccess = $false
 }
 
-# Remove the temporary JSON file
-Remove-Item -Path $tempFile -Force
+if ($downloadSuccess) {
+    # Import applications using winget
+    winget import -i $tempFile
+
+    # Check if the import command was successful
+    if ($LASTEXITCODE -eq 0) {
+        Write-Output "Applications imported successfully."
+    } else {
+        Write-Output "Failed to import applications. Exit code: $LASTEXITCODE"
+    }
+
+    # Remove the temporary JSON file
+    Remove-Item -Path $tempFile -Force
+}
 
 # Remove the script file itself
 Remove-Item -Path $MyInvocation.MyCommand.Definition -Force
