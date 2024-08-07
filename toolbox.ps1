@@ -5,8 +5,8 @@ function Show-Menu {
     cls
     Write-Host $Title -ForegroundColor Cyan
     Write-Host "1: Setup Powershell Profile"
-    Write-Host "2: Run Script from URL 2"
-    Write-Host "3: Exit"
+    Write-Host "2: Setup Neovim Profile"
+    Write-Host "3: Setup Applications"
 }
 
 function Run-Command {
@@ -27,7 +27,7 @@ do {
 
     switch ($choice) {
         '1' { Run-Command "https://raw.githubusercontent.com/Mabc365/xube-toolbox/main/setup-scripts/powershell-setup.ps1" }
-        '2' { Run-Command "https://example.com/script2.ps1" }
+        '2' { Run-Command "https://raw.githubusercontent.com/Mabc365/xube-toolbox/main/setup-scripts/neovim-setup.ps1" }
         '3' { Write-Host "Exiting..." -ForegroundColor Green; exit }
         default { Write-Host "Invalid option, try again." -ForegroundColor Red }
     }
