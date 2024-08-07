@@ -4,7 +4,7 @@ function Show-Menu {
     )
     cls
     Write-Host $Title -ForegroundColor Cyan
-    Write-Host "1: Run Script from URL 1"
+    Write-Host "1: Setup Powershell Profile"
     Write-Host "2: Run Script from URL 2"
     Write-Host "3: Exit"
 }
@@ -26,7 +26,7 @@ do {
     $choice = Read-Host "Enter your choice"
 
     switch ($choice) {
-        '1' { Run-Command "https://example.com/script1.ps1" }
+        '1' { Run-Command "https://raw.githubusercontent.com/Mabc365/xube-toolbox/main/setup-scripts/powershell-setup.ps1" }
         '2' { Run-Command "https://example.com/script2.ps1" }
         '3' { Write-Host "Exiting..." -ForegroundColor Green; exit }
         default { Write-Host "Invalid option, try again." -ForegroundColor Red }
